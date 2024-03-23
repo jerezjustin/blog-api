@@ -2,7 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Enums\Role;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
+use function Pest\Laravel\actingAs;
+
 use Tests\TestCase;
 
 /*
@@ -42,7 +47,16 @@ expect()->extend('toBeOne', fn() => $this->toBe(1));
 |
 */
 
-function something(): void
+function asAdmin(): TestCase
 {
-    // ..
+    $user = User::factory()->create(['role' => Role::Administrator]);
+
+    return actingAs($user);
+}
+
+function asUser(): TestCase
+{
+    $user = User::factory()->create(['role' => Role::User]);
+
+    return actingAs($user);
 }
