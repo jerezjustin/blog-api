@@ -11,6 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\assertDatabaseMissing;
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
 
@@ -75,4 +76,13 @@ test('can update a category', function (): void {
     ])->assertOk();
 
     assertDatabaseHas('categories', ['name' => $updatedName]);
+});
+
+test('can delete a category', function (): void {
+    $category = Category::factory()->create();
+
+    asAdmin()->delete('api/v1/categories/' . $category->getRouteKey())
+        ->assertNoContent();
+
+    assertDatabaseMissing('categories', $category->toArray());
 });

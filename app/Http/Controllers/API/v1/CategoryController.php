@@ -25,7 +25,7 @@ class CategoryController extends Controller
         return response()->json(CategoryResource::collection($categories), Response::HTTP_OK);
     }
 
-    public function store(UpsertCategoryRequest $request)
+    public function store(UpsertCategoryRequest $request): JsonResponse
     {
         Gate::authorize('store', Category::class);
 
@@ -48,7 +48,7 @@ class CategoryController extends Controller
         return response()->json(new CategoryResource($category), Response::HTTP_OK);
     }
 
-    public function destroy(Category $category)
+    public function destroy(Category $category): JsonResponse
     {
         Gate::authorize('delete', $category);
 
