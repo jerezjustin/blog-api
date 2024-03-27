@@ -16,7 +16,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => $title = fake()->sentence(),
-            'slug' => str($title)->slug(),
+            'slug' => (string) str($title)->slug(),
             'content' => fake()->paragraphs(random_int(1, 5), true),
             'is_draft' => fake()->boolean(),
             'user_id' => User::factory()->create(),

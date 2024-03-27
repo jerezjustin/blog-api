@@ -22,6 +22,15 @@ class Post extends Model
         'is_draft',
     ];
 
+    protected $casts = [
+        'is_draft' => 'boolean',
+    ];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);

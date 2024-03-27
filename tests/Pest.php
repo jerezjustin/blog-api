@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\Role;
 use App\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use function Pest\Laravel\actingAs;
@@ -47,16 +48,20 @@ expect()->extend('toBeOne', fn() => $this->toBe(1));
 |
 */
 
-function asAdmin(): TestCase
+function asAdmin(?Authenticatable $user = null): TestCase
 {
-    $user = User::factory()->create(['role' => Role::Administrator]);
+    if ( ! $user) {
+        $user = User::factory()->create(['role' => Role::Administrator]);
+    }
 
     return actingAs($user);
 }
 
-function asUser(): TestCase
+function asUser(?Authenticatable $user = null): TestCase
 {
-    $user = User::factory()->create(['role' => Role::User]);
+    if ( ! $user) {
+        $user = User::factory()->create(['role' => Role::User]);
+    }
 
     return actingAs($user);
 }

@@ -36,6 +36,8 @@ class CategoryController extends Controller
 
     public function show(Category $category): JsonResponse
     {
+        $category->load('posts');
+
         return response()->json(new CategoryResource($category), Response::HTTP_OK);
     }
 
