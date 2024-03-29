@@ -13,7 +13,7 @@ uses(RefreshDatabase::class);
 dataset('relationships', [
     [User::class, 'comments', Comment::class],
     [User::class, 'posts', Post::class],
-    [Comment::class, 'comments', Comment::class],
+    [Comment::class, 'replies', Comment::class],
     [Post::class, 'categories', Category::class],
     [Post::class, 'comments', Comment::class],
 ]);

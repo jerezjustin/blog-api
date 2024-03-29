@@ -23,6 +23,7 @@ class PostResource extends JsonResource
             'user_id' => $this->user_id,
             'user' => new UserResource($this->whenLoaded('user')),
             'categories' => CategoryResource::collection($this->whenLoaded('categories')),
+            'comments' => CommentResource::collection($this->whenLoaded('comments'))
         ];
     }
 }

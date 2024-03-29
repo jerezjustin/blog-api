@@ -29,7 +29,7 @@ class PostController extends Controller
 
     public function show(Post $post): JsonResponse
     {
-        $post->load('categories', 'user');
+        $post->load('categories', 'comments', 'user');
 
         return response()->json(new PostResource($post), Response::HTTP_OK);
     }

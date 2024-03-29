@@ -25,7 +25,7 @@ class Comment extends Model
         return $this->morphTo();
     }
 
-    public function comments(): MorphMany
+    public function replies(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
