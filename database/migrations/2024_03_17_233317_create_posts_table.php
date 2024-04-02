@@ -18,6 +18,7 @@ return new class () extends Migration {
 
             $table->string('title', 255);
             $table->string('slug')->unique();
+            $table->text('summary')->nullable();
             $table->longText('content');
             $table->boolean('is_draft')->default(true);
 

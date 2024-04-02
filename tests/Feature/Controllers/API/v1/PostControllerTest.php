@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\Role;
 use App\Http\Resources\PostResource;
+use App\Http\Resources\PostSummaryResource;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -18,14 +19,14 @@ uses(RefreshDatabase::class);
 test('can show paginated posts', function (): void {
     $posts = Post::factory(1)->create();
 
-    $expectedPostsCollection = PostResource::collection($posts);
+    $expectedPostsCollection = PostSummaryResource::collection($posts);
 
     get('/api/v1/posts')
         ->assertOk()
-        ->assertJson($expectedPostsCollection->response()->getData(true)['data']);
+        ->assertJson($expectedPostsCollection->response()->getData(true));
 });
 
-test('can show a specific post', function (): void {
+test('can show    specific post', function (): void {
     $post = Post::factory()->create();
 
     get('api/v1/posts/' . $post->getRouteKey())

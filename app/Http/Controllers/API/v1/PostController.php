@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
+use App\Http\Resources\PostSummaryResource;
 use App\Models\Post;
 use App\Services\PostService;
 use Illuminate\Http\JsonResponse;
@@ -20,11 +21,11 @@ class PostController extends Controller
 
     public function index(): JsonResponse
     {
-        $posts = $this->postService->getPaginated();
+        $posts = $this->postService->getPaginated(perPage: 3);
 
-        $posts->load('categories', 'user');
+        $posts->load('categories', 'comments', 'user');
 
-        return response()->json(PostResource::collection($posts), Response::HTTP_OK);
+        return response()->json(PostSummaryResource::collection($posts)->response()->getData(), Response::HTTP_OK);
     }
 
     public function show(Post $post): JsonResponse

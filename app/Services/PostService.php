@@ -6,13 +6,19 @@ namespace App\Services;
 
 use App\DTO\PostDTO;
 use App\Models\Post;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PostService
 {
-    public function getPaginated(): Collection
+    public function getPaginated(int $perPage = 10): LengthAwarePaginator
     {
-        return Post::all();
+        $posts = Post::query();
+
+        if ($searchValue = request()->query('search')) {
+            $posts = Post::search($searchValue);
+        }
+
+        return $posts->paginate($perPage);
     }
 
     public function create(array $data): Post
