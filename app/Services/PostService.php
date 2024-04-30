@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\DTO\PostDTO;
+use App\Enums\Role;
 use App\Models\Post;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -18,7 +19,13 @@ class PostService
             $posts = Post::search($searchValue);
         }
 
-        return $posts->paginate($perPage);
+        if (Role::Administrator !== request()->user()?->role) {
+            $posts->published();
+        }
+
+        return $posts
+            ->latest()
+            ->paginate($perPage);
     }
 
     public function create(array $data): Post

@@ -15,6 +15,7 @@ class PostSummaryResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
+            'is_draft' => (bool) $this->is_draft,
             'created_at' => $this->created_at,
             'author' => $this->whenLoaded('user', fn() => [
                 'id' => $this->user->id,

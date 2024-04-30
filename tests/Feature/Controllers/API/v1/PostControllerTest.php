@@ -16,8 +16,8 @@ use function Pest\Laravel\get;
 
 uses(RefreshDatabase::class);
 
-test('can show paginated posts', function (): void {
-    $posts = Post::factory(1)->create();
+test('can show paginated published posts', function (): void {
+    $posts = Post::factory(5)->create(['is_draft' => false]);
 
     $expectedPostsCollection = PostSummaryResource::collection($posts);
 

@@ -21,7 +21,7 @@ class PostController extends Controller
 
     public function index(): JsonResponse
     {
-        $posts = $this->postService->getPaginated(perPage: 3);
+        $posts = $this->postService->getPaginated();
 
         $posts->load('categories', 'comments', 'user');
 
